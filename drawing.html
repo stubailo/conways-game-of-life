@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="graphics.js"></script>
+    <style>
+    canvas {position: absolute; left: 100px; top: 100px; height:400px; width:400px}
+    </style>    
+</head>
+
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+(function () {
+	Coord = function (x, y) {return {x:x, y:y};};
+	Color = function (red, green, blue) {
+		return {red: red, green: green, blue: blue};
+		}
+	var black = Color(0,0,0);
+	var red = Color(255,0,0);
+	var green = Color(0,255,0);
+	var blue = Color(0,0,255);
+
+	pad = Pad(document.getElementById('canvas'));
+	pad.clear();
+
+	var MAX_X = 100;
+	var MAX_Y = 100;
+	var x_factor = pad.get_width() / MAX_X;
+  var y_factor = pad.get_height() / MAX_Y;
+
+	// draw a box
+	pad.draw_line(
+		Coord(0, 0),
+		Coord(100*x_factor, 0), 
+		10, black);
+	pad.draw_line(
+		Coord(0, 0),
+		Coord(0, 100*y_factor), 
+		10, black);
+	pad.draw_line(
+		Coord(0, 100*y_factor),
+		Coord(100*x_factor, 100*y_factor), 
+		10, black);
+	pad.draw_line(
+		Coord(100*x_factor, 0),
+		Coord(100*x_factor, 100*y_factor), 
+		10, black);
+
+	// draw some circles inside the box
+	var RADIUS = 1;
+	for (var i = 10; i < MAX_X; i = i + 10)
+		for (var j = 10; j < MAX_Y; j = j + 10)
+			pad.draw_point(Coord(i*x_factor, j*y_factor), RADIUS, green);
+	}) ()
+
+
+</script>
+
+</body>
+</html>
