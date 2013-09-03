@@ -14,17 +14,17 @@ var Pad = function (canvas) {
     var width = canvas.width;
     var height = canvas.height;
 
-    function apply_line_width(ctx, line_width) {
+    var apply_line_width = function (ctx, line_width) {
         ctx.lineWidth = (line_width) ? line_width : DEFAULT_LINE_WIDTH;
     }
 
-    function apply_color(ctx, color) {
+    var apply_color = function (ctx, color) {
         if (color) {
             ctx.strokeStyle = 'rgba(' + color.red + ',' + color.green + ',' + color.blue + ', 1)';
         }
     }
 
-    function apply_fill_color(ctx, color) {
+    var apply_fill_color = function (ctx, color) {
         if (color) {
             ctx.fillStyle = 'rgba(' + color.red + ',' + color.green + ',' + color.blue + ', 1)';
         }
