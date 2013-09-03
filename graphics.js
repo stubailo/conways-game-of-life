@@ -32,7 +32,7 @@ var Pad = function (canvas) {
     }
 
     return {
-        draw_circle: function(coord, radius, line_width, color, fill_color) {
+        draw_circle: function (coord, radius, line_width, color, fill_color) {
             context.beginPath();
             context.arc(coord.x, coord.y,
                         (radius) ? radius : DEFAULT_CIRCLE_RADIUS,
