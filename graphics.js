@@ -62,7 +62,6 @@ var Pad = function (canvas) {
             apply_line_width(context, line_width);
             apply_color(context, color);
             context.lineWidth = (line_width) ? line_width : DEFAULT_LINE_WIDTH;
-            context.fill();
             context.closePath();
             context.stroke();
         },
@@ -72,10 +71,12 @@ var Pad = function (canvas) {
 	// height. An optional line width can be supplied (defaults to
 	// DEFAULT_LINE_WIDTH otherwise), as well as an optional color
 	// and fill color (both returned by the Color function).
+        draw_rectangle: function (top_left, width, height, line_width, color, fill_color) {
             context.beginPath();
             context.rect(top_left.x, top_left.y, width, height);
             apply_line_width(context, line_width);
             apply_color(context, color);
+	    apply_fill_color(context, fill_color);
             context.closePath();
             context.stroke();
         },
