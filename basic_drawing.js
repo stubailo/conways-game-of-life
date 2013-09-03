@@ -22,7 +22,7 @@
 	for (var j = 10; j < MAX_Y; j = j + 10) {
 	    if (i % 20 == j % 20) {
 		pad.draw_circle(Coord(i*x_factor, j*y_factor),
-				RADIUS, LINE_WIDTH, green);
+				RADIUS, LINE_WIDTH, green, green);
 	    } else {
 		pad.draw_rectangle(Coord(i*x_factor-RADIUS, j*y_factor-RADIUS),
 				   RADIUS*2, RADIUS*2, LINE_WIDTH, red);
