@@ -43,10 +43,6 @@ var Pad = function (canvas) {
             context.stroke();
         },
 
-       draw_point: function (coord, color) {
-           this.draw_circle(coord, 1, 1, color, color);
-        },
-
         draw_line: function (from, to, line_width, color) {
             context.beginPath();
             context.moveTo(from.x, from.y);
@@ -66,10 +62,6 @@ var Pad = function (canvas) {
             apply_color(context, color);
             context.closePath();
             context.stroke();
-        },
-
-        draw_square: function (top_left, side_length, line_width, color) {
-            this.draw_rectangle(top_left, side_length, side_length, line_width, color);
         },
 
         clear: function () {
