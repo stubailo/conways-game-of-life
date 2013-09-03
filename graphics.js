@@ -27,6 +27,7 @@ var Pad = function (canvas) {
     var apply_fill_color = function (ctx, color) {
         if (color) {
             ctx.fillStyle = 'rgba(' + color.red + ',' + color.green + ',' + color.blue + ', 1)';
+	    ctx.fill();
         }
     }
 
