@@ -32,6 +32,13 @@ var Pad = function (canvas) {
     }
 
     return {
+	// Draws a circle at the given coordinate (as returned by the
+	// Coord function) of the given radius (defaulting to
+	// DEFAULT_CIRCLE_RADIUS if the radius is 0 or omitted). An
+	// optional line width can be supplied (defaults to
+	// DEFAULT_LINE_WIDTH otherwise), as well as an optional color
+	// and fill color (both objects returned by the Color
+	// function).
         draw_circle: function (coord, radius, line_width, color, fill_color) {
             context.beginPath();
             context.arc(coord.x, coord.y,
@@ -44,6 +51,10 @@ var Pad = function (canvas) {
             context.stroke();
         },
 
+	// Draws a line between the given coordinates (as returned by
+	// the Coord function). An optional line width can be supplied
+	// (defaults to DEFAULT_LINE_WIDTH otherwise), as well as an
+	// optional color (returned by the Color function).
         draw_line: function (from, to, line_width, color) {
             context.beginPath();
             context.moveTo(from.x, from.y);
@@ -56,7 +67,11 @@ var Pad = function (canvas) {
             context.stroke();
         },
 
-        draw_rectangle: function (top_left, width, height, line_width, color) {
+	// Draws a rectangle starting at the top left corner (as
+	// returned by the Coord function) of the given width and
+	// height. An optional line width can be supplied (defaults to
+	// DEFAULT_LINE_WIDTH otherwise), as well as an optional color
+	// and fill color (both returned by the Color function).
             context.beginPath();
             context.rect(top_left.x, top_left.y, width, height);
             apply_line_width(context, line_width);
@@ -65,6 +80,7 @@ var Pad = function (canvas) {
             context.stroke();
         },
 
+	// Clears the entire board
         clear: function () {
             context.clearRect(0, 0, width, height);
         },
