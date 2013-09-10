@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <script src="graphics.js"></script>
     <style>
-    canvas {position: absolute; left: 100px; top: 100px; height:400px; width:400px}
+      canvas {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -200px;
+        margin-top: -200px;
+        border: 1px solid #ccc;
+      }
     </style>
-</head>
+  </head>
 
 <body>
 
 <!--
 define the HTML canvas element that will hold the graphical output
 -->
-<canvas id="canvas"></canvas>
+<canvas id="canvas" width="400" height="400"></canvas>
 
 <!--
 execute the JavaScript
