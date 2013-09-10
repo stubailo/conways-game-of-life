@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      canvas {
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Conway's Game of Life</h1>
+
+    <!-- define the HTML canvas element that will hold the graphical output -->
+    <div>
+      <canvas id="canvas" width="400" height="400"></canvas>
+    </div>
+    
+    <!-- some links to different example URL hashes -->
+    <div>
+      <p>Click the links below to see different starting states.</p>
+      <a href="#interval=100&grid=0010101010,1001000111,1001101101,0100100110,1101101011,0010101010,1001000111,1001101101,0100100110,1101101011">Example 1</a>
+      <a href="#grid=0010,1001,1001,0100&size_x=4&size_y=4">Example 2</a>
+      <br />
+
+      <p>Alternatively, you can set your own by typing the columns in the URL as in the examples.</p>
+    </div>
+    
+    <!-- execute the JavaScript -->
+    <script src="graphics.js"></script>
+    <script src="conway.js"></script>
+  </body>
+</html>

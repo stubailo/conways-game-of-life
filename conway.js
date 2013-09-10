@@ -2,19 +2,12 @@
 
   ///////////////////// Initializing variables
 
+  // will be initialized at the bottom by hash options
+  var dimensions, cell_width, cell_height;
+
 	// create the drawing pad object and associate with the canvas
 	pad = Pad(document.getElementById('canvas'));
 	pad.clear();
-  
-  // number of cells to draw
-  var dimensions = {
-    x: 10,
-    y: 10
-  };
-
-  // calculate size of each cell based on number of cells and canvas size
-  var cell_width = pad.get_width()/dimensions.x;
-  var cell_height = pad.get_height()/dimensions.y;
 
 	// define some colors
 	var black = Color(0, 0, 0);
@@ -135,6 +128,11 @@
   // parses URL-encoded options (key=val&key2=val2) in the hash, returns dictionary of option names to values
   function parse_URL_hash() {
     var options = {};
+
+    if(!window.location.hash) {
+      return options;
+    }
+
     var hash_text = window.location.hash.slice(1);
 
     var pairs = hash_text.split("&");
@@ -150,21 +148,54 @@
     return options;
   }
 
+  // merges a dictionary with a second one, with the second taking precedence
+  function merge_options(first, override) {
+    for(key in override) {
+      if(override.hasOwnProperty(key)) {
+        first[key] = override[key];
+      }
+    }
+  }
+  
+  // see if hash has changed; if so then refresh page.  Comes with global var to keep track of previous hash
+  var prev_hash = window.location.hash;
+  function check_hash() {
+    if(window.location.hash !== prev_hash) {
+      window.location.reload();
+    }
+  }
  
-  var DEFAULT_OPTIONS = {
-    grid: "0010,1001,1001,0100"
+  
+  ///////////////////// Running the code
+  
+  var options = {
+    grid: parse_starting_grid("0010,1001,1001,0100"),
+    size_x: 10,
+    size_y: 10,
+    interval: 1000
   }
 
-  ///////////////////// Running the code
+  merge_options(options, parse_URL_hash());
+  
+  // number of cells to draw
+  dimensions = {
+    x: options.size_x,
+    y: options.size_y
+  };
 
-  var options = parse_URL_hash();
+  // calculate size of each cell based on number of cells and canvas size
+  cell_width = pad.get_width()/dimensions.x;
+  cell_height = pad.get_height()/dimensions.y;
 
   var curr_grid = options.grid;
 
   draw_cells(curr_grid);
+  
   setInterval(function() {
     curr_grid = step_conway(curr_grid);
     draw_cells(curr_grid);
-  }, 1000);
+  }, options.interval);
+
+  setInterval(check_hash, 50);
 
 }) ();
