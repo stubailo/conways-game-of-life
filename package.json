@@ -1,0 +1,10 @@
+{
+  "name": "Conway",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-jslint": "~1.0.0",
+    "grunt-mocha": "~0.4.1",
+    "grunt-cli": "~0.1.9"
+  }
+}

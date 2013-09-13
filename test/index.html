@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Conway Tests</title>
+    <link rel="stylesheet" href="mocha.css">
+    <script src="chai.js"></script>
+    <script src="mocha.js"></script>
+    <script src="../graphics.js"></script>
+    <script src="../conway.js"></script>
+    
+    <script>mocha.setup('bdd');</script>
+
+    <script src="conway_tests.js"></script>
+    <script>
+      window.onload = function() {
+        mocha.run();
+      };
+    </script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+  </body>
+</html>
