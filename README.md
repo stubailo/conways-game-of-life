@@ -12,10 +12,11 @@ framework) and jslint (style checker).
 
 Overview
 ----------
-`graphics.js`: The graphics code provided with the lab.
-`conway.js`: The game logic.  The `run_game(element)` function at the end calls all of the relevant code.
-`options.js`: Code for parsing options embedded in the URL hash.
-`index.html`: The page that the game runs on.  It calls `run_game` in a script tag at the bottom.
+- `graphics.js`: The graphics code provided with the lab.
+- `conway.js`: The game logic.  The `run_game(element)` function at the end calls all of the relevant code.
+- `options.js`: Code for parsing options embedded in the URL hash.
+- `index.html`: The page that the game runs on.  It calls `run_game` in a script tag at the bottom.
+- `test/conway_tests.js`: Unit tests.
 
 Design challenges
 ------------------
