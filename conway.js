@@ -11,22 +11,22 @@
     // draw a grid of cells on the pad - black rectangle for true, white for false
     draw_cells: function (pad, grid, cell_width, cell_height) {
       var black = Color(0, 0, 0),
-        white = Color(255, 255, 255),
-        x,
-        y,
-        column,
-        cell;
+        white = Color(255, 255, 255);
 
       pad.clear();
-      for (x = 0; x < grid.length; x++) {
-        column = grid[x];
-        for (y = 0; y < column.length; y++) {
-          cell = column[y];
+
+      // use for loop because indices are used for drawing
+      grid.forEach(function (row, x) {
+        row.forEach(function (cell, y) {
+          var corner;
+
           if (cell) {
-            pad.draw_rectangle(Coord(x * cell_width, y * cell_height), cell_width, cell_height, 1, white, black);
+            corner = Coord(x * cell_width, y * cell_height);
+            pad.draw_rectangle(corner, cell_width, cell_height, 1, white, black);
           }
-        }
-      }
+
+        });
+      });
     },
 
 
@@ -84,21 +84,11 @@
 
     // run a step of conway's game of life, and return the new state
     step_conway: function (grid) {
-      var x,
-        y,
-        output_grid = [],
-        new_row;
-
-      for (x = 0; x < grid.length; x++) {
-        new_row = [];
-        output_grid.push(new_row);
-
-        for (y = 0; y < grid[x].length; y++) {
-          new_row.push(Conway.get_new_state(grid, x, y));
-        }
-      }
-
-      return output_grid;
+      return grid.map(function (row, x) {
+        return row.map(function (cell, y) {
+          return Conway.get_new_state(grid, x, y);
+        });
+      });
     },
 
 
@@ -106,23 +96,12 @@
 
     // parses starting grid in the form 1101,1011,0011,0101 where each row is 1s and 0s, rows separated by commas
     parse_starting_grid: function (url_string) {
-      var grid = [],
-        rows = url_string.split(","),
-        new_row;
-
-      rows.forEach(function (row) {
-        new_row = [];
-        row.split("").forEach(function (cell) {
-          if (cell === "1") {
-            new_row.push(true);
-          } else {
-            new_row.push(false);
-          }
+      return url_string.split(",").map(function (row) {
+        return row.split("").map(function (cell) {
+          // cell becomes true if it's a 1, false otherwise
+          return cell === "1";
         });
-        grid.push(new_row);
       });
-
-      return grid;
     },
 
 
@@ -134,6 +113,8 @@
         cell_width,
         cell_height,
         curr_grid,
+
+        // default options
         options = {
           grid: "0010,1001,1001,0100",
           size_x: 10,
