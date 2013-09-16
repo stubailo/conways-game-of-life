@@ -27,10 +27,11 @@
     </div>
     
     <!-- execute the JavaScript -->
+    <script src="options.js"></script>
     <script src="graphics.js"></script>
     <script src="conway.js"></script>
     <script>
-      window.onload = Conway.run_game();
+      window.onload = Conway.run_game(document.getElementById("canvas"));
     </script>
   </body>
 </html>

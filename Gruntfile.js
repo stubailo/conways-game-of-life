@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 
     jslint: {
       all: {
-        src: ["conway.js"]
+        src: ["conway.js", "options.js"]
       }
     }
   });
