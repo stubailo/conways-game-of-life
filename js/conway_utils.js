@@ -123,8 +123,6 @@
           interval: 1000
         };
 
-      $.extend(options, ConwayOptions.parse_URL_hash());
-
       // set starting state
       curr_grid = ConwayUtils.parse_starting_grid(options.grid);
 
@@ -145,8 +143,6 @@
         curr_grid = ConwayUtils.step_conway(curr_grid);
         ConwayUtils.draw_cells(pad, curr_grid, cell_width, cell_height);
       }, options.interval);
-
-      setInterval(ConwayOptions.check_hash, 50);
     }
   };
 
