@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var Conway = {
+  var ConwayUtils = {
 
     //////////////////// Rendering
 
@@ -55,7 +55,7 @@
         neighbor_x = direction[0] + x;
         neighbor_y = direction[1] + y;
 
-        if (Conway.is_alive(grid, neighbor_x, neighbor_y)) {
+        if (ConwayUtils.is_alive(grid, neighbor_x, neighbor_y)) {
           sum++;
         }
       });
@@ -65,8 +65,8 @@
 
     // get the next state of a cell
     get_new_state: function (grid, x, y) {
-      var sum = Conway.sum_neighbors(grid, x, y),
-        alive = Conway.is_alive(grid, x, y);
+      var sum = ConwayUtils.sum_neighbors(grid, x, y),
+        alive = ConwayUtils.is_alive(grid, x, y);
 
       if (alive && (sum < 2 || 3 < sum)) {
         // dies
@@ -86,7 +86,7 @@
     step_conway: function (grid) {
       return grid.map(function (row, x) {
         return row.map(function (cell, y) {
-          return Conway.get_new_state(grid, x, y);
+          return ConwayUtils.get_new_state(grid, x, y);
         });
       });
     },
@@ -107,6 +107,7 @@
 
     ///////////////////// Putting it all together
 
+
     run_game: function (element) {
       var dimensions,
         pad = Pad(element),
@@ -122,10 +123,10 @@
           interval: 1000
         };
 
-      ConwayOptions.merge_options(options, ConwayOptions.parse_URL_hash());
+      $.extend(options, ConwayOptions.parse_URL_hash());
 
       // set starting state
-      curr_grid = Conway.parse_starting_grid(options.grid);
+      curr_grid = ConwayUtils.parse_starting_grid(options.grid);
 
       // number of cells to draw
       dimensions = {
@@ -138,16 +139,16 @@
       cell_height = pad.get_height() / dimensions.y;
 
       // initial render
-      Conway.draw_cells(pad, curr_grid, cell_width, cell_height);
+      ConwayUtils.draw_cells(pad, curr_grid, cell_width, cell_height);
 
       setInterval(function () {
-        curr_grid = Conway.step_conway(curr_grid);
-        Conway.draw_cells(pad, curr_grid, cell_width, cell_height);
+        curr_grid = ConwayUtils.step_conway(curr_grid);
+        ConwayUtils.draw_cells(pad, curr_grid, cell_width, cell_height);
       }, options.interval);
 
       setInterval(ConwayOptions.check_hash, 50);
     }
   };
 
-  window.Conway = Conway;
+  window.ConwayUtils = ConwayUtils;
 }());

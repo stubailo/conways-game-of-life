@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <style>
+      body {
+        margin: 10px;
+      }
       canvas {
         border: 1px solid #ccc;
+      }
+      #options-panel .title .glyphicon {
+          margin-bottom: 3px;
+      }
+      #options-panel form {
+        background-color: #eee;
+        padding: 10px;
       }
     </style>
   </head>
@@ -11,27 +22,69 @@
   <body>
     <h1>Conway's Game of Life</h1>
 
-    <!-- define the HTML canvas element that will hold the graphical output -->
-    <div>
-      <canvas id="canvas" width="400" height="400"></canvas>
-    </div>
-    
-    <!-- some links to different example URL hashes -->
-    <div>
-      <p>Click the links below to see different starting states.</p>
-      <a href="#interval=100&grid=0010101010,1001000111,1001101101,0100100110,1101101011,0010101010,1001000111,1001101101,0100100110,1101101011">Example 1</a>
-      <a href="#grid=0010,1001,1001,0100&size_x=4&size_y=4">Example 2</a>
-      <br />
+    <div class="row">
+      <div class="col-sm-8">
+        <!-- define the HTML canvas element that will hold the graphical output -->
+        <div style="text-align: center">
+          <canvas id="canvas" width="400" height="400"></canvas>
+        </div>
+      </div>
+      
+      <div class="col-sm-4" id="options-panel">
+        <h3 class="title">
+          <small><span class="glyphicon glyphicon-chevron-down"></span></small>
+          Options
+        </h3>
+        <form>
+          <div class="form-group">
+            <label for="cell-size" class="form-label">Cell size</label>
+            <input type="number" class="form-control" id="cell-size" name="cell-size">
+          </div>
+          <div class="form-group">
+            <label for="update-interval" class="form-label">Update interval</label>
+            <input type="number" class="form-control" id="update-interval" name="update-interval">
+          </div>
+          <h4>Number of cells</h4>
+          <div class="row">
+            <div class="form-group col-sm-6">
+              <label for="grid-size-x" class="form-label">Horizontal</label>
+              <input type="number" class="form-control" id="grid-size-x" name="grid-size-x">
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="grid-size-y" class="form-label">Vertical</label>
+              <input type="number" class="form-control" id="grid-size-y" name="grid-size-y">
+            </div>
+          </div>
+          <input type="submit" value="Submit" class="btn btn-primary" />
+        </form>
 
-      <p>Alternatively, you can set your own by typing the columns in the URL as in the examples.</p>
+
+        <!-- some links to different example URL hashes -->
+        <p>Click the links below to see different starting states.</p>
+        <a href="#interval=100&grid=0010101010,1001000111,1001101101,0100100110,1101101011,0010101010,1001000111,1001101101,0100100110,1101101011">Example 1</a>
+        <a href="#grid=0010,1001,1001,0100&size_x=4&size_y=4">Example 2</a>
+        <br />
+
+        <p>Alternatively, you can set your own by typing the columns in the URL as in the examples.</p>
+      </div>
     </div>
+
     
-    <!-- execute the JavaScript -->
-    <script src="options.js"></script>
-    <script src="graphics.js"></script>
-    <script src="conway.js"></script>
+    <!-- include libraries -->
+    <script src="js/include/jquery-2.0.3.min.js"></script>
+    <script src="js/include/underscore-min.js"></script>
+    <script src="js/include/backbone-min.js"></script>
+
+    <!-- game code -->
+    <script src="js/conway_utils.js"></script>
+    <script src="js/conway.js"></script>
+    <script src="js/options.js"></script>
+    <script src="js/graphics.js"></script>
     <script>
-      window.onload = Conway.run_game(document.getElementById("canvas"));
+      var options_model = new Conway.OptionsModel({"cell-size": 5});
+      new Conway.OptionsView({model: options_model, el: "#options-panel"});
+      var conway_model = new Conway.ConwayModel({options: options_model});
+      new Conway.ConwayView({model: conway_model, el: document.getElementById("canvas")});
     </script>
   </body>
 </html>
