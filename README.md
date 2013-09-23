@@ -74,7 +74,7 @@ clear button) and the actual grid.  It also allowed me to have the game model li
 changes in settings.  If I were to extend the project with additional features in the future, using this model will
 undoubtedly make my life easier.
 
-Nodes on Design
+Notes on Design
 -----------------
 
 My design notes from the previous part of the project:
