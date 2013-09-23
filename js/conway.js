@@ -118,6 +118,9 @@
 
   var ConwayGridView = Backbone.View.extend({
     initialize: function () {
+      // keep track of mouse being down or up
+      this.mouse_down = false;
+
       this.$canvas = this.$("#canvas");
       this.canvas = this.$canvas[0];
       this.render();
@@ -177,12 +180,16 @@
         }
 
         new_cell.on("mouseover", function (event) {
-          if (event.which === 1) {
+          if (_this.mouse_down) {
             toggle();
           }
         });
 
         new_cell.on("mousedown", function (event) {
+          _this.mouse_down = true;
+          $(window).one("mouseup", function () {
+            _this.mouse_down = false;
+          });
           toggle();
         });
       }
