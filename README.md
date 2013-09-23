@@ -22,8 +22,8 @@ Fun features
 ---------------
 - You can edit the game board at any time by clicking/dragging on the cells.
 - You can change options such as grid size and speed while the game is running.
-- The board resizes to fit your screen when you resize your browser.
-- The page is responsive, on a cell phone screen options move to below the game, giving you maximum viewing room.
+- The board resizes to fit your screen when you resize your browser so that you don't have to scroll around.
+- The page is responsive, on a smaller screen or browser window options move to below the game, giving you maximum viewing room.
 
 Design challenges
 ------------------
@@ -74,7 +74,7 @@ clear button) and the actual grid.  It also allowed me to have the game model li
 changes in settings.  If I were to extend the project with additional features in the future, using this model will
 undoubtedly make my life easier.
 
-Nodes on Design
+Notes on Design
 -----------------
 
 My design notes from the previous part of the project:
