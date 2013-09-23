@@ -1,0 +1,42 @@
+body {
+  padding: 10px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
+}
+
+#canvas {
+  border: 1px solid #ccc;
+  line-height: 0;
+}
+
+#game-container .tools {
+  padding-bottom: 10px;
+}
+
+#options-panel .title .glyphicon {
+  margin-bottom: 3px;
+}
+
+#options-panel form {
+  background-color: #eee;
+  padding: 10px;
+}
+
+.cell {
+  display: inline-block;
+  margin: 1px;
+}
+
+.cell-alive {
+  background: #000;
+  color: transparent;
+}
+
+.cell-dead {
+  background: #eee;
+  color: transparent;
+}

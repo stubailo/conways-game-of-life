@@ -2,24 +2,7 @@
 <html>
   <head>
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <style>
-      body {
-        padding: 10px;
-      }
-      canvas {
-        border: 1px solid #ccc;
-      }
-      #game-container .tools {
-        padding-bottom: 10px;
-      }
-      #options-panel .title .glyphicon {
-        margin-bottom: 3px;
-      }
-      #options-panel form {
-        background-color: #eee;
-        padding: 10px;
-      }
-    </style>
+    <link href="css/conway.css" rel="stylesheet" media="screen">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
@@ -29,7 +12,7 @@
       <div class="col-sm-8 col-lg-9">
         <!-- define the HTML canvas element that will hold the graphical output -->
         <div id="game-container" style="text-align: center">
-          <canvas id="canvas" width="400" height="400"></canvas>
+          <div id="canvas" width="400" height="400"></div>
           <div class="tools" style="text-align: left">
             <button class="btn play"><span class="glyphicon glyphicon-play"></span> Play</button>
             <button class="btn pause"><span class="glyphicon glyphicon-pause"></span> Pause</button>

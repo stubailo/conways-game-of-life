@@ -1,5 +1,5 @@
 /*jslint es5: true, browser: true, indent: 2, newcap: true, plusplus: true */
-/*global $: false, Backbone: false, Conway: false, ConwayUtils: false, ConwayOptions: false, Color: false, Coord: false, Pad: false */
+/*global $: false, Backbone: false, Conway: false, ConwayUtils: false, ConwayOptions: false, d3: false*/
 
 (function () {
   "use strict";
@@ -13,13 +13,40 @@
     },
 
     initialize: function () {
-      var grid = "0010,1001,1001,0100";
-
       // set starting state
-      this.set("grid", ConwayUtils.parse_starting_grid(grid));
+      this.resize_grid();
+
       this.listenTo(this.get("options"), "change:update-interval", this.restart_game);
+      this.listenTo(this.get("options"), "change:grid-size", this.resize_grid);
 
       this.set("turns", 0);
+    },
+
+    resize_grid: function () {
+      var new_grid_size = this.get("options").get("grid-size"),
+        new_grid = [],
+        new_row,
+        new_cell,
+        x,
+        y;
+
+      for (x = 0; x < new_grid_size; x++) {
+        new_row = [];
+        for (y = 0; y < new_grid_size; y++) {
+          new_cell = false;
+          
+          // see if there is an old value to be copied
+          if (this.get("grid") !== undefined) {
+            // this function is guaranteed to not give an index error
+            new_cell = ConwayUtils.is_alive(this.get("grid"), x, y);
+          }
+
+          new_row.push(new_cell);
+        }
+        new_grid.push(new_row);
+      }
+
+      this.set("grid", new_grid);
     },
 
     start_game: function () {
@@ -27,7 +54,6 @@
         $.proxy(this.step_game, this),
         this.get("options").get("update-interval")
       );
-
       this.set("paused", false);
     },
 
@@ -49,6 +75,8 @@
 
   var ConwayView = Backbone.View.extend({
     initialize: function () {
+      this.$canvas = this.$("#canvas");
+      this.canvas = this.$canvas[0];
       this.render();
 
       this.listenTo(this.model, "change", this.render);
@@ -64,12 +92,50 @@
     },
 
     render_grid: function () {
-      var pad = Pad(this.$("canvas")[0]),
-        options = this.model.get("options"),
-        cell_size = this.$("canvas").height() / options.get("grid-size");
+      var options = this.model.get("options"),
+        cell_size = this.$("#canvas").height() / options.get("grid-size"),
+        _this = this;
+      
+      // clear
+      
+      this.$canvas.html("");
 
-      // initial render
-      ConwayUtils.draw_cells(pad, this.model.get("grid"), cell_size, cell_size);
+      this.model.get("grid").forEach(function (row, x) {
+        row.forEach(function (cell, y) {
+          (function () {
+            var new_cell = $("<div>").appendTo(_this.$canvas);
+
+            new_cell.css({
+              height: cell_size - 2,
+              width: cell_size - 2
+            });
+
+            new_cell.addClass("cell");
+
+            if (cell) {
+              new_cell.addClass("cell-alive");
+            } else {
+              new_cell.addClass("cell-dead");
+            }
+
+            function come_alive() {
+              _this.model.get("grid")[x][y] = true;
+              new_cell.addClass("cell-alive");
+              new_cell.removeClass("cell-dead");
+            }
+
+            new_cell.on("mouseover", function (event) {
+              if (event.which === 1) {
+                come_alive();
+              }
+            });
+
+            new_cell.on("mousedown", function (event) {
+              come_alive();
+            });
+          }());
+        });
+      });
     },
 
     render: function () {
@@ -99,7 +165,10 @@
       var max_height = $(window).height() - this.$(".tools").height() - 30;
 
       var square_side = Math.min(max_width, max_height);
-      $("canvas").attr("height", square_side).attr("width", square_side);
+      this.$canvas.css({
+        height: square_side,
+        width: square_side
+      });
 
       this.render();
     }
