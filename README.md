@@ -12,10 +12,11 @@ framework) and jslint (style checker).
 
 Overview
 ----------
-`conway_utils.js`: The game logic, split into simple, convenient, easily testable functions.
-`conway.js`: This defines a Backbone model for a game object, and two views: one for the grid and one for the game controls.
-`options.js`: This defines a Backbone model for game options, and a view for an options panel to edit them.
-`index.html`: The page that the game runs on.  It initializes all of the models and views in a script tag at the bottom.
+- `conway_utils.js`: The game logic, split into simple, convenient, easily testable functions.
+- `conway.js`: This defines a Backbone model for a game object, and two views: one for the grid and one for the game controls.
+- `options.js`: This defines a Backbone model for game options, and a view for an options panel to edit them.
+- `index.html`: The page that the game runs on.  It initializes all of the models and views in a script tag at the bottom.
+- `test/conway_tests.js`: Unit tests.
 
 Design challenges
 ------------------
