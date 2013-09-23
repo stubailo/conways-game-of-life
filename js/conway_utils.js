@@ -103,47 +103,6 @@
         });
       });
     },
-
-
-    ///////////////////// Putting it all together
-
-
-    run_game: function (element) {
-      var dimensions,
-        pad = Pad(element),
-        cell_width,
-        cell_height,
-        curr_grid,
-
-        // default options
-        options = {
-          grid: "0010,1001,1001,0100",
-          size_x: 10,
-          size_y: 10,
-          interval: 1000
-        };
-
-      // set starting state
-      curr_grid = ConwayUtils.parse_starting_grid(options.grid);
-
-      // number of cells to draw
-      dimensions = {
-        x: options.size_x,
-        y: options.size_y
-      };
-
-      // calculate size of each cell based on number of cells and canvas size
-      cell_width = pad.get_width() / dimensions.x;
-      cell_height = pad.get_height() / dimensions.y;
-
-      // initial render
-      ConwayUtils.draw_cells(pad, curr_grid, cell_width, cell_height);
-
-      setInterval(function () {
-        curr_grid = ConwayUtils.step_conway(curr_grid);
-        ConwayUtils.draw_cells(pad, curr_grid, cell_width, cell_height);
-      }, options.interval);
-    }
   };
 
   window.ConwayUtils = ConwayUtils;

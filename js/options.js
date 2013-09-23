@@ -10,11 +10,9 @@
   $.extend(window.Conway, {
     OptionsModel: Backbone.Model.extend({
       defaults: {
-        "cell-size": 10,
         "update-interval": 1000,
-        "grid-size-x": 10,
-        "grid-size-y": 10,
-        "drawer-open": false
+        "grid-size": 10,
+        "drawer-open": true
       }
     }),
 
@@ -30,8 +28,9 @@
       },
 
       events: {
-        "submit":    "update_model",
-        "click .title": "toggle_open"
+        "submit":         "update_model",
+        // "change input":   "update_model", // uncomment to make the submit button unnecessary
+        "click .title":   "toggle_open"
       },
 
       update_model: function (event) {
@@ -43,8 +42,6 @@
           attributes[name_val_pair["name"]] = parseInt(name_val_pair["value"]);
         });
         
-        console.log(attributes);
-
         this.model.set(attributes);
         return false;
       },
@@ -71,7 +68,6 @@
           this.$("form").slideUp(this.animation_duration);
         }
       }
-
     })
   });
 }());

@@ -4,68 +4,59 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <style>
       body {
-        margin: 10px;
+        padding: 10px;
       }
       canvas {
         border: 1px solid #ccc;
       }
+      #game-container .tools {
+        padding-bottom: 10px;
+      }
       #options-panel .title .glyphicon {
-          margin-bottom: 3px;
+        margin-bottom: 3px;
       }
       #options-panel form {
         background-color: #eee;
         padding: 10px;
       }
     </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
 
   <body>
-    <h1>Conway's Game of Life</h1>
-
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-8 col-lg-9">
         <!-- define the HTML canvas element that will hold the graphical output -->
-        <div style="text-align: center">
+        <div id="game-container" style="text-align: center">
           <canvas id="canvas" width="400" height="400"></canvas>
+          <div class="tools" style="text-align: left">
+            <button class="btn play"><span class="glyphicon glyphicon-play"></span> Play</button>
+            <button class="btn pause"><span class="glyphicon glyphicon-pause"></span> Pause</button>
+            <span class="counter">0 turns</span>
+          </div>
         </div>
       </div>
       
-      <div class="col-sm-4" id="options-panel">
+      <div id="sidebar" class="col-sm-4 col-lg-3">
+        <h2><small>Conway's Game of Life</small></h2>
+        <div id="options-panel">
         <h3 class="title">
           <small><span class="glyphicon glyphicon-chevron-down"></span></small>
           Options
         </h3>
         <form>
           <div class="form-group">
-            <label for="cell-size" class="form-label">Cell size</label>
-            <input type="number" class="form-control" id="cell-size" name="cell-size">
-          </div>
-          <div class="form-group">
             <label for="update-interval" class="form-label">Update interval</label>
             <input type="number" class="form-control" id="update-interval" name="update-interval">
           </div>
-          <h4>Number of cells</h4>
-          <div class="row">
-            <div class="form-group col-sm-6">
-              <label for="grid-size-x" class="form-label">Horizontal</label>
-              <input type="number" class="form-control" id="grid-size-x" name="grid-size-x">
-            </div>
-            <div class="form-group col-sm-6">
-              <label for="grid-size-y" class="form-label">Vertical</label>
-              <input type="number" class="form-control" id="grid-size-y" name="grid-size-y">
-            </div>
+          <div class="form-group">
+            <label for="grid-size" class="form-label">Grid size</label>
+            <input type="number" class="form-control" id="grid-size" name="grid-size">
           </div>
-          <input type="submit" value="Submit" class="btn btn-primary" />
+          <input type="submit" value="Apply" class="btn btn-primary" />
         </form>
-
-
-        <!-- some links to different example URL hashes -->
-        <p>Click the links below to see different starting states.</p>
-        <a href="#interval=100&grid=0010101010,1001000111,1001101101,0100100110,1101101011,0010101010,1001000111,1001101101,0100100110,1101101011">Example 1</a>
-        <a href="#grid=0010,1001,1001,0100&size_x=4&size_y=4">Example 2</a>
-        <br />
-
-        <p>Alternatively, you can set your own by typing the columns in the URL as in the examples.</p>
+      </div>
       </div>
     </div>
 
@@ -81,10 +72,10 @@
     <script src="js/options.js"></script>
     <script src="js/graphics.js"></script>
     <script>
-      var options_model = new Conway.OptionsModel({"cell-size": 5});
+      var options_model = new Conway.OptionsModel();
       new Conway.OptionsView({model: options_model, el: "#options-panel"});
       var conway_model = new Conway.ConwayModel({options: options_model});
-      new Conway.ConwayView({model: conway_model, el: document.getElementById("canvas")});
+      new Conway.ConwayView({model: conway_model, el: document.getElementById("game-container")});
     </script>
   </body>
 </html>
