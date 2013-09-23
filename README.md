@@ -22,8 +22,8 @@ Fun features
 ---------------
 - You can edit the game board at any time by clicking/dragging on the cells.
 - You can change options such as grid size and speed while the game is running.
-- The board resizes to fit your screen when you resize your browser.
-- The page is responsive, on a cell phone screen options move to below the game, giving you maximum viewing room.
+- The board resizes to fit your screen when you resize your browser so that you don't have to scroll around.
+- The page is responsive, on a smaller screen or browser window options move to below the game, giving you maximum viewing room.
 
 Design challenges
 ------------------
