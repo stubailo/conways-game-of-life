@@ -18,10 +18,20 @@ Overview
 - `index.html`: The page that the game runs on.  It initializes all of the models and views in a script tag at the bottom.
 - `test/conway_tests.js`: Unit tests.
 
+Fun features
+---------------
+- You can edit the game board at any time by clicking/dragging on the cells.
+- You can change options such as grid size and speed while the game is running.
+- The board resizes to fit your screen when you resize your browser.
+- The page is responsive, on a cell phone screen options move to below the game, giving you maximum viewing room.
+
 Design challenges
 ------------------
 
 ### Representation of game board
+#### Issues
+Needs to be simple and logical and disallow completely invalid states.
+
 #### Options
 There are several options.  The first is a 2D array of Cell objects that keep track of their life or death.
 This has the advantage of being extensible to different kinds of games, including ones that don't just involve
@@ -43,6 +53,9 @@ Additionally, for the second part of the project, I have wrapped the grid in a m
 rendering, and events.
 
 ### Rendering code
+#### Issues
+Needs to make it easy to render in different ways, needs to be independent from data.
+
 #### Options
 One option is a model-view like architecture where the game model throws events on change, causing a re-render of
 the game board.  This has the advantage of supporting many nice features and allowing easy switching of different
