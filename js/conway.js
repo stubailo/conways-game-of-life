@@ -162,7 +162,7 @@
       this.$canvas.html("");
 
       // function to set attributes on new cell
-      function add_cell(is_alive, x, y) {
+      function add_cell(is_alive, x, y, first_in_row) {
         // create new cell and get reference
         var new_cell = $("<div>").appendTo(_this.$canvas);
 
@@ -174,6 +174,10 @@
 
         // set classes
         new_cell.addClass("cell");
+        if (first_in_row) {
+          new_cell.addClass("cell-first");
+        }
+
         if (is_alive) {
           new_cell.addClass("cell-alive");
         } else {
@@ -229,7 +233,8 @@
       if (this.model.get("grid")) {
         this.model.get("grid").forEach(function (row, x) {
           row.forEach(function (cell, y) {
-            add_cell(cell, x, y);
+            var is_first = y === 0;
+            add_cell(cell, x, y, is_first);
           });
         });
       }

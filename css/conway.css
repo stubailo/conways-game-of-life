@@ -40,3 +40,7 @@ body {
   background: #eee;
   color: transparent;
 }
+
+.cell-first {
+  clear: left;
+}
