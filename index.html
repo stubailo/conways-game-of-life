@@ -9,37 +9,54 @@
 
   <body>
     <div class="row">
-      <div class="col-sm-8 col-lg-9">
+      <div class="col-sm-7 col-lg-9 col-sm-push-5 col-lg-push-3">
         <!-- define the HTML canvas element that will hold the graphical output -->
-        <div id="game-container" style="text-align: center">
-          <div id="canvas" width="400" height="400"></div>
-          <div class="tools" style="text-align: left">
-            <button class="btn play"><span class="glyphicon glyphicon-play"></span> Play</button>
-            <button class="btn pause"><span class="glyphicon glyphicon-pause"></span> Pause</button>
-            <span class="counter">0 turns</span>
-          </div>
+        <div id="game-container">
+          <div id="canvas"></div>
+          <div class="clearfix"></div>
         </div>
       </div>
       
-      <div id="sidebar" class="col-sm-4 col-lg-3">
+      <div id="sidebar" class="col-sm-5 col-lg-3 col-sm-pull-7 col-lg-pull-9">
         <h2><small>Conway's Game of Life</small></h2>
+        <p>
+          Click and drag inside the game board to toggle cell state.  Use the buttons under the board to control the game playback.
+        </p>
+        <hr />
+        <div id="game-tools" class="tools">
+          <div>
+            <button class="btn btn-primary play"><span class="glyphicon glyphicon-play"></span> Play</button>
+            <button class="btn btn-primary pause"><span class="glyphicon glyphicon-pause"></span> Pause</button>
+
+            <span class="turn-counter">
+              turn <span class="counter">0</span>
+            </span>
+            <button class="btn btn-default clear pull-right">Clear Board</button>
+          </div>
+        </div>
+        <hr />
         <div id="options-panel">
-        <h3 class="title">
-          <small><span class="glyphicon glyphicon-chevron-down"></span></small>
-          Options
-        </h3>
-        <form>
-          <div class="form-group">
-            <label for="update-interval" class="form-label">Update interval</label>
-            <input type="number" class="form-control" id="update-interval" name="update-interval">
-          </div>
-          <div class="form-group">
-            <label for="grid-size" class="form-label">Grid size</label>
-            <input type="number" class="form-control" id="grid-size" name="grid-size">
-          </div>
-          <input type="submit" value="Apply" class="btn btn-primary" />
-        </form>
-      </div>
+          <h3 class="title">
+            <small>
+              Options
+            </small>
+          </h3>
+          <form>
+            <div class="form-group">
+              <label for="update-interval" class="form-label">Update interval</label>
+              <input type="number" class="form-control" id="update-interval" name="update-interval">
+            </div>
+            <div class="form-group">
+              <label for="grid-size" class="form-label">Grid size</label>
+              <input type="number" class="form-control" id="grid-size" name="grid-size">
+            </div>
+            <input type="submit" value="Apply" class="btn btn-default" />
+          </form>
+        </div>
+        <hr />
+        <p>
+          Made by Sashko Stubailo
+        </p>
       </div>
     </div>
 
@@ -55,10 +72,12 @@
     <script src="js/options.js"></script>
     <script src="js/graphics.js"></script>
     <script>
+      // code to run the game
       var options_model = new Conway.OptionsModel();
       new Conway.OptionsView({model: options_model, el: "#options-panel"});
       var conway_model = new Conway.ConwayModel({options: options_model});
-      new Conway.ConwayView({model: conway_model, el: document.getElementById("game-container")});
+      new Conway.ConwayToolsView({model: conway_model, el: document.getElementById("game-tools")});
+      new Conway.ConwayGridView({model: conway_model, el: document.getElementById("game-container")});
     </script>
   </body>
 </html>

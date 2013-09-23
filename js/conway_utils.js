@@ -5,33 +5,6 @@
   "use strict";
 
   var ConwayUtils = {
-
-    //////////////////// Rendering
-
-    // draw a grid of cells on the pad - black rectangle for true, white for false
-    draw_cells: function (pad, grid, cell_width, cell_height) {
-      var black = Color(0, 0, 0),
-        white = Color(255, 255, 255);
-
-      pad.clear();
-
-      // use for loop because indices are used for drawing
-      grid.forEach(function (row, x) {
-        row.forEach(function (cell, y) {
-          var corner;
-
-          if (cell) {
-            corner = Coord(x * cell_width, y * cell_height);
-            pad.draw_rectangle(corner, cell_width, cell_height, 1, white, black);
-          }
-
-        });
-      });
-    },
-
-
-    //////////////////// Utilities
-
     // check if the cell is alive; if the index is out of the grid, default to dead
     is_alive: function (grid, x, y) {
       if (0 <= x && x < grid.length && 0 <= y && y < grid[x].length) {

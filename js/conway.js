@@ -70,10 +70,53 @@
     restart_game: function () {
       this.pause_game();
       this.start_game();
+    },
+
+    clear_board: function () {
+      this.set("grid", undefined);
+      this.resize_grid();
     }
   });
 
-  var ConwayView = Backbone.View.extend({
+  var ConwayToolsView = Backbone.View.extend({
+    initialize: function () {
+      this.render();
+
+      this.listenTo(this.model, "change", this.render);
+    },
+
+    events: {
+      "click .play": "toggle_pause",
+      "click .pause": "toggle_pause",
+      "click .clear": "clear_board"
+    },
+
+    render: function () {
+      this.$(".counter").text(this.model.get("turns"));
+
+      if (this.model.get("paused")) {
+        this.$(".play").show();
+        this.$(".pause").hide();
+      } else {
+        this.$(".play").hide();
+        this.$(".pause").show();
+      }
+    },
+    
+    toggle_pause: function () {
+      if (this.model.get("paused")) {
+        this.model.start_game();
+      } else {
+        this.model.pause_game();
+      }
+    },
+
+    clear_board: function () {
+      this.model.clear_board();
+    },
+  });
+
+  var ConwayGridView = Backbone.View.extend({
     initialize: function () {
       this.$canvas = this.$("#canvas");
       this.canvas = this.$canvas[0];
@@ -86,77 +129,71 @@
       $(window).on("resize", $.proxy(this.fill_space, this));
     },
 
-    events: {
-      "click .play": "toggle_pause",
-      "click .pause": "toggle_pause"
-    },
-
-    render_grid: function () {
+    render: function () {
       var options = this.model.get("options"),
         cell_size = this.$("#canvas").height() / options.get("grid-size"),
         _this = this;
       
-      // clear
-      
+      // clear 
       this.$canvas.html("");
 
-      this.model.get("grid").forEach(function (row, x) {
-        row.forEach(function (cell, y) {
-          (function () {
-            var new_cell = $("<div>").appendTo(_this.$canvas);
+      // function to set attributes on new cell
+      function add_cell(is_alive, x, y) {
+        var new_cell = $("<div>").appendTo(_this.$canvas);
 
-            new_cell.css({
-              height: cell_size - 2,
-              width: cell_size - 2
-            });
-
-            new_cell.addClass("cell");
-
-            if (cell) {
-              new_cell.addClass("cell-alive");
-            } else {
-              new_cell.addClass("cell-dead");
-            }
-
-            function come_alive() {
-              _this.model.get("grid")[x][y] = true;
-              new_cell.addClass("cell-alive");
-              new_cell.removeClass("cell-dead");
-            }
-
-            new_cell.on("mouseover", function (event) {
-              if (event.which === 1) {
-                come_alive();
-              }
-            });
-
-            new_cell.on("mousedown", function (event) {
-              come_alive();
-            });
-          }());
+        new_cell.css({
+          height: cell_size - 2,
+          width: cell_size - 2
         });
-      });
-    },
 
-    render: function () {
-      this.render_grid();
+        new_cell.addClass("cell");
 
-      this.$(".tools .counter").text(this.model.get("turns") + " turns");
+        if (is_alive) {
+          new_cell.addClass("cell-alive");
+        } else {
+          new_cell.addClass("cell-dead");
+        }
 
-      if (this.model.get("paused")) {
-        this.$(".tools .play").show();
-        this.$(".tools .pause").hide();
-      } else {
-        this.$(".tools .play").hide();
-        this.$(".tools .pause").show();
+        function come_alive() {
+          _this.model.get("grid")[x][y] = true;
+          new_cell.addClass("cell-alive");
+          new_cell.removeClass("cell-dead");
+          is_alive = true;
+        }
+        
+        function kill() {
+          _this.model.get("grid")[x][y] = false;
+          new_cell.removeClass("cell-alive");
+          new_cell.addClass("cell-dead");
+          is_alive = false;
+        }
+
+        function toggle() {
+          if (is_alive) {
+            kill();
+          } else {
+            come_alive();
+          }
+        }
+
+        new_cell.on("mouseover", function (event) {
+          if (event.which === 1) {
+            toggle();
+          }
+        });
+
+        new_cell.on("mousedown", function (event) {
+          toggle();
+        });
       }
-    },
 
-    toggle_pause: function () {
-      if (this.model.get("paused")) {
-        this.model.start_game();
-      } else {
-        this.model.pause_game();
+      // iterate over grid and add cells
+      if (this.model.get("grid")) {
+        this.model.get("grid").forEach(function (row, x) {
+          row.forEach(function (cell, y) {
+            add_cell(cell, x, y);
+          });
+        });
       }
     },
 
@@ -180,6 +217,7 @@
 
   $.extend(window.Conway, {
     ConwayModel: ConwayModel,
-    ConwayView: ConwayView
+    ConwayGridView: ConwayGridView,
+    ConwayToolsView: ConwayToolsView
   });
 }());

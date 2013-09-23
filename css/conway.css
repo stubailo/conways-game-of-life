@@ -9,26 +9,26 @@ body {
 }
 
 #canvas {
-  border: 1px solid #ccc;
   line-height: 0;
+}
+
+#game-container {
+  position: relative;
 }
 
 #game-container .tools {
   padding-bottom: 10px;
 }
 
-#options-panel .title .glyphicon {
-  margin-bottom: 3px;
-}
-
-#options-panel form {
-  background-color: #eee;
-  padding: 10px;
+#game-tools .turn-counter {
+  margin-left: 10px;
+  font-size: 1.2em;
 }
 
 .cell {
-  display: inline-block;
-  margin: 1px;
+  display: block;
+  margin: 1px 1px 0 0;
+  float: left;
 }
 
 .cell-alive {
